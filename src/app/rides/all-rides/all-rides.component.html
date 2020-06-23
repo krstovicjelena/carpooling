@@ -1,0 +1,122 @@
+
+<!-- <div fxLayoutAlign="center center">
+  <mat-form-field fxFlex="40%">
+      <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div> -->
+<div fxLayoutAlign="center center" *ngIf="this.US.getCurrentUser().typeOfUser == 'Putnik'">
+<mat-form-field fxFlex="40%">
+    <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Pretraga">
+</mat-form-field>
+
+
+</div>
+
+
+
+<mat-table [dataSource]="rideSource" matSort>
+    <ng-container matColumnDef="rideName" sticky>
+    <mat-header-cell *matHeaderCellDef mat-sort-header fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px" >
+    Naziv vožnje
+    
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element" >{{ element.rideName }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="idPrevoznik">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Ime prevoznika</mat-header-cell>
+    <mat-cell *matCellDef="let element" routerLink="/profile" (click)="this.US.profileToShow=element.idPrevoznik" >
+        <div fxLayoutAlign="center center" fxLayout="row">
+                <mat-icon>stars</mat-icon>
+                {{this.US.getRatingById(element.idPrevoznik)[0]}}
+        <a href="javascript:;">{{ this.US.getNameById(element.idPrevoznik) }}</a>
+        
+        </div>
+    </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="timeOfDeparture">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Datum polaska</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.timeOfDeparture | date }}</mat-cell>
+        </ng-container>
+
+   
+     <ng-container matColumnDef="hourOfDeparture">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Sat polaska</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.hourOfDeparture | number }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="minuteOfDeparture">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Minut polaska</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.minuteOfDeparture | number }}</mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="startingLocation">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Polazište</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.startingLocation }}</mat-cell>
+        </ng-container>
+        
+    <ng-container matColumnDef="stajalista">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Stajališta</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.stajalista }}</mat-cell>
+        </ng-container>
+
+
+
+   
+
+    <ng-container matColumnDef="destination">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Odrediste</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+        <a href="https://www.google.com/maps/dir/%C5%A0imanovci/%D0%94%D0%B0%D0%BD%D0%B8%D1%98%D0%B5%D0%BB%D0%BE%D0%B2%D0%B0+32,+%D0%91%D0%B5%D0%BE%D0%B3%D1%80%D0%B0%D0%B4/@44.8038819,20.2142368,12z/data=!3m1!4b1!4m13!4m12!1m5!1m1!1s0x475a5ad2b0606c5b:0xd62a2e8b03fa7436!2m2!1d20.0890785!2d44.8744422!1m5!1m1!1s0x475a705dffae2ab9:0x4609e2bcb6b89d6f!2m2!1d20.479254!2d44.7816946?hl=sr" target="_blank">{{ element.destination }}</a>
+      
+    </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="hourOfArrival">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Sat dolaska</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.hourOfArrival | number }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="minuteOfArrival">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Minut dolaska</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.minuteOfArrival | number }}</mat-cell>
+        </ng-container>
+
+    <ng-container matColumnDef="passengers">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Zauzeto mesta</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.passengers.length }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="maxPassengers">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Maksimalno putnika</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.maxPassengers | number }}</mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.status }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+    <mat-header-cell *matHeaderCellDef>Aktivnosti</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <button mat-raised-button color="accent"
+      (click)="requestRide(row)" *ngIf="this.US.getCurrentUser().typeOfUser == 'Putnik'"
+      [disabled]="this.RS.getRideByID(row.id).status != 'čeka na zahteve' "
+      >Zakaži</button>
+      <button 
+      *ngIf="this.US.getCurrentUser().typeOfUser=='Prevoznik'"
+      mat-raised-button
+      color="warn"
+      [disabled]="this.RS.getRideByID(row.id).status == 'završena' "
+      (click)="editRide(row)">Izmeni</button>
+    </mat-cell>
+    </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let rows; columns: displayedColumns;"></mat-row>
+</mat-table>
+<mat-paginator [pageSize]="10" [pageSizeOptions]="[5,10,20,50,100]"></mat-paginator>
+
+
+
+

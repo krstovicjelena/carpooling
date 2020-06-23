@@ -1,0 +1,27 @@
+<mat-tab-group>
+    <mat-tab label="Moje vožnje" *ngIf="this.US.getCurrentUser().typeOfUser == 'Prevoznik'">
+        <ng-template matTabLabel>
+            <span matBadge="1" matBadgeOverlap="false" [matBadgeHidden]="true" >Moje vožnje</span>
+        </ng-template>
+      <app-all-rides></app-all-rides>
+    </mat-tab>
+    <mat-tab *ngIf="this.US.getCurrentUser().typeOfUser == 'Putnik'"> 
+        <ng-template matTabLabel>
+          <span >Sve vožnje</span>
+        </ng-template>
+        <app-all-rides></app-all-rides>
+      </mat-tab>
+
+  <mat-tab *ngIf="this.US.getCurrentUser().typeOfUser == 'Prevoznik'"> 
+    <ng-template matTabLabel>
+      <span >Nova vožnja</span>
+    </ng-template>
+    <app-new-ride></app-new-ride>
+  </mat-tab>
+  <mat-tab>
+      <ng-template matTabLabel>
+        <span >Završene vožnje</span>
+      </ng-template>
+    <app-completed-rides></app-completed-rides>
+  </mat-tab>
+</mat-tab-group>

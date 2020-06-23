@@ -1,0 +1,90 @@
+<section id="forma" fxLayoutAlign="center center" fxLayout="column" fxLayoutGap="10px">
+  <mat-card>
+  <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px"
+  #f="ngForm" (ngSubmit)="onSubmit(f)">
+
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+  <mat-icon style="font-size: 30px !important">email</mat-icon>
+    <mat-form-field>
+      <input type="email" matInput placeholder="Email" ngModel name="email" email required #emailInput="ngModel">
+      <mat-error *ngIf="emailInput.hasError('required')">Unesite Vašu email adresu</mat-error>
+      <mat-error *ngIf="!emailInput.hasError('required')">Unesite validan format email adrese</mat-error>
+      <mat-hint>Unesite email</mat-hint>
+    </mat-form-field>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" >
+    <mat-icon style="font-size: 30px !important">lock</mat-icon>
+    <mat-form-field appearance="standard" hintLabel="Unesite minimum 6 karaktera">
+      <mat-label> Password</mat-label>
+      <input type="password" matInput placeholder [type]="hide ? 'password' : 'text'" ngModel name="password" [(ngModel)]=password required minlength="6" #passInput="ngModel">
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon> 
+      <mat-hint align="end">{{ passInput.value?.length }} /6 </mat-hint>
+      <mat-error *ngIf="passInput.hasError('required')">Unesite password</mat-error> 
+      <mat-error *ngIf="!passInput.hasError('required')">Unesite minimunm 6 karaktera</mat-error> 
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" >
+    <mat-icon style="font-size: 30px !important">account_circle</mat-icon>
+    <mat-form-field appearance="standard" hintLabel="Unesite ime">
+      <input type="text" matInput placeholder="Ime" ngModel name="firstName" required #firstNameInput="ngModel" pattern="^[A-zšđčćž]+$"> 
+      <mat-error *ngIf="firstNameInput.hasError('required')">Unesite ime</mat-error> 
+      <mat-error *ngIf="!firstNameInput.hasError('required')">Unesite ime u ispravnom formatu</mat-error> 
+
+    </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" >
+    <mat-icon style="font-size: 30px !important">account_circle</mat-icon>
+    <mat-form-field appearance="standard" hintLabel="Unesite prezime.">
+      <input type="text" matInput placeholder="Prezime" ngModel name="lastName" required #lastNameInput="ngModel" pattern="^[A-zšđčćž]+( [A-zšđčćž]+)?$">
+      <mat-error *ngIf="lastNameInput.hasError('required')">Unesite prezime.</mat-error>
+      <mat-error *ngIf="!lastNameInput.hasError('required')">Unesite prezime u ispravnom formatu</mat-error>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" >
+    <mat-icon style="font-size: 30px !important">phone</mat-icon>
+    <mat-form-field appearance="standard" hintLabel="Unesite broj telefona u formatu XXX-XXX-XXX(X)">
+      <input type="phone" matInput placeholder="Broj telefona" ngModel name="phone" required #phoneInput="ngModel" pattern="^\d{3}-\d{3}-\d{3,4}$">
+      <mat-error *ngIf="phoneInput.hasError('required')">Unesite broj telefona</mat-error>
+      <mat-error *ngIf="!phoneInput.hasError('required')">Unesite broj telefona u formatu XXX-XXX-XXX(X)</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" >
+      <mat-icon style="font-size: 30px !important">home</mat-icon>
+    <mat-form-field appearance="standard" hintLabel="Unesite adresu.">
+      <input type="address" matInput placeholder="Adresa" ngModel name="address" required #adressInput="ngModel">
+      <mat-error *ngIf="adressInput.hasError('required')">Unesite svoju punu adresu</mat-error>
+    </mat-form-field>
+
+  </div>
+   
+    
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" >
+    <mat-form-field appearance="outline" floatPlaceholder="always" floatLabel="always" class="mat-form-field--no-underline">
+      <mat-label>Tip naloga</mat-label>
+    <input matInput placeholder style="display: none">
+    <mat-radio-group ngModel name="typeOfUser" [(ngModel)]=typeOfUser required #typeOfUserInput="ngModel" fxLayout fxLayoutAlign="center" fxLayoutGap="20px">
+      <mat-radio-button value="Prevoznik">Prevoznik</mat-radio-button>
+      <mat-radio-button value="Putnik">Putnik</mat-radio-button>
+    </mat-radio-group>
+  </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" >
+  <re-captcha (resolved)="resolved($event)" siteKey="6LdHpqwUAAAAAFX4Kpx4yfT03M4VARsnqpZfFm78"></re-captcha>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <mat-checkbox color="primary" ngModel name="acceptance" required></mat-checkbox>
+    Prihvatam <a href="javascript:;" (click)="onTos()">uslove korišćenja.</a> 
+  </div>
+
+ 
+
+
+    <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">
+      Registrujte nalog
+    </button>
+  </form>
+</mat-card>
+</section>

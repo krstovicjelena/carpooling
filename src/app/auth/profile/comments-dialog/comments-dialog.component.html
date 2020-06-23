@@ -1,0 +1,17 @@
+<mat-dialog-content fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="flex-start" fxLayoutAlign="flex-start" >
+    <button mat-raised-button color="warn" (click)="onClick()" >
+        Zatvori Prozor
+      </button>
+    <h2>Komentari:</h2>
+    <div fxLayoutAlign="flex-start" *ngFor="let item of this.commentList">
+
+        <mat-card >{{item.comment}}
+            <div>
+                <font size="-1.5"> 
+                  <a href="javascript:;" routerLink="/profile" (click)="this.US.profileToShow=item.idFrom;onClick();">{{this.US.getNameById(item.idFrom)}}</a></font>
+              </div>
+        </mat-card>
+    </div>
+
+
+</mat-dialog-content>

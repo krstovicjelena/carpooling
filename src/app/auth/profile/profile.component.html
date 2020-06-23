@@ -1,0 +1,141 @@
+
+
+<section fxLayoutAlign="center center" fxLayout="column" fxLayoutGap="10px" id="profil"> 
+  <mat-card class="example-card">
+    <mat-card-header class="profile" fxLayoutAlign="center center">
+      <div mat-card-avatar><mat-icon>face</mat-icon></div>
+      <mat-card-title>{{this.US.getProfileToShow().firstName}} {{this.US.getProfileToShow().lastName}}</mat-card-title>
+      <mat-card-subtitle>{{this.US.getProfileToShow().typeOfUser}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+   
+    <section *ngIf="!isEditing" class="profiledata">
+      <mat-card-header fxLayout="row" fxLayoutGap="10px">
+        <div>
+          <mat-icon>stars</mat-icon>
+        </div>
+        <div>
+          <mat-card-title>{{this.US.getRatingById(this.US.getProfileToShow().id)[0]}}</mat-card-title>
+          <mat-card-subtitle>{{this.US.getRatingById(this.US.getProfileToShow().id)[1]}} ocene</mat-card-subtitle>
+        </div>
+      </mat-card-header>
+   
+      <mat-card-header fxLayout="row" fxLayoutGap="10px">
+        <div>
+          <mat-icon>email</mat-icon>
+        </div>
+        <div>
+          <mat-card-title>{{this.US.getProfileToShow().email}}</mat-card-title>
+          <mat-card-subtitle>Email</mat-card-subtitle>
+        </div>
+      </mat-card-header>
+      <mat-card-header fxLayout="row" fxLayoutGap="10px">
+        <div>
+          <mat-icon>phone</mat-icon>
+        </div>
+        <div>
+          <mat-card-title>{{this.US.getProfileToShow().phone}}</mat-card-title>
+          <mat-card-subtitle>Telefon</mat-card-subtitle>
+        </div>
+      </mat-card-header>
+      <mat-card-header fxLayout="row" fxLayoutGap="10px">
+        <div>
+          <mat-icon>home</mat-icon>
+        </div>
+        <div>
+          <mat-card-title>{{this.US.getProfileToShow().address}}</mat-card-title>
+          <mat-card-subtitle>Adresa</mat-card-subtitle>
+        </div>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-actions  fxLayoutAlign="center center" >
+          <button mat-button *ngIf="this.US.getProfileToShow()==this.US.getCurrentUser() !isEditing " mat-raised-button color="primary" (click)="isEditing=true">Izmeni</button>
+          <button mat-button mat-raised-button color="primary" (click)="onComment()">Pregled Komentara</button>
+        </mat-card-actions> 
+        
+
+    </section>
+  
+  
+    <section *ngIf="isEditing" class="profiledataedit">
+    <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px"
+    #f="ngForm" (ngSubmit)="onSubmit(f)">
+  
+    <mat-form-field appearance="outline">
+      <mat-label>Ime</mat-label>
+      <input type="text" matInput placeholder ngModel name="firstName" [(ngModel)]=firstName required #firstNameInput="ngModel" pattern="^[A-zšđčćž]+$"> 
+      <mat-icon matSuffix>account_circle</mat-icon>
+      <mat-error *ngIf="firstNameInput.hasError('required')">Unesite ime</mat-error> 
+      <mat-error *ngIf="!firstNameInput.hasError('required')">Unesite ime u ispravnom formatu</mat-error> 
+
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline">
+      <mat-label>Prezime</mat-label>
+      <input type="text" matInput placeholder ngModel name="lastName" [(ngModel)]=lastName required #lastNameInput="ngModel" pattern="^[A-zšđčćž]+( [A-zšđčćž]+)?$"> 
+      <mat-icon matSuffix>account_circle</mat-icon>
+      <mat-error *ngIf="lastNameInput.hasError('required')">Unesite prezime.</mat-error> 
+      <mat-error *ngIf="!lastNameInput.hasError('required')">Unesite prezime u ispravnom formatu.</mat-error> 
+
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput placeholder ngModel name="email" [(ngModel)]=email email required #emailInput="ngModel"> 
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-error *ngIf="emailInput.hasError('required')">Unesite Vaš email</mat-error>
+      <mat-error *ngIf="!emailInput.hasError('required')">Unesite email u ispravnom fomratu.</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput placeholder [type]="hide ? 'password' : 'text'" ngModel name="password" [(ngModel)]=password required minlength="6" #passInput="ngModel">
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon> 
+      <mat-hint align="end">{{ passInput.value?.length }} /6 </mat-hint>
+    </mat-form-field>
+  
+ 
+  
+    <mat-form-field appearance="outline">
+      <mat-label>Telefon</mat-label>
+      <input type="phone" matInput placeholder ngModel name="phone" [(ngModel)]=phone required #phoneInput="ngModel" pattern="^\d{3}-\d{3}-\d{3,4}$"> 
+      <mat-icon matSuffix>phone</mat-icon>
+      <mat-error *ngIf="phoneInput.hasError('required')">Unesite broj telefona</mat-error>
+      <mat-error *ngIf="!phoneInput.hasError('required')">Unesite broj telefona u formatu XXX-XXX-XXX(X).</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline">
+      <mat-label>Adresa</mat-label>
+      <input type="text" matInput placeholder ngModel name="address" [(ngModel)]=address required #addressInput="ngModel"> 
+      <mat-icon matSuffix>home</mat-icon>
+      <mat-error *ngIf="addressInput.hasError('required')">Unesite punu adresu</mat-error> 
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline" floatPlaceholder="always" floatLabel="always" class="mat-form-field--no-underline">
+        <mat-label>Tip naloga</mat-label>
+      <input matInput placeholder style="display: none">
+      <mat-radio-group ngModel name="typeOfUser" [(ngModel)]=typeOfUser required #typeOfUserInput="ngModel" fxLayout fxLayoutAlign="center" fxLayoutGap="20px">
+        <mat-radio-button value="Prevoznik">Prevoznik</mat-radio-button>
+        <mat-radio-button value="Putnik">Putnik</mat-radio-button>
+      </mat-radio-group>
+    </mat-form-field>
+  
+  
+    
+    <div fxLayoutGap="20px" fxLayout="row" fxLayoutAlign="center center" >
+    <button mat-stroked-button color="primary" (click)="isEditing=false">
+      OTKAŽI
+    </button>
+    <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">
+      SAČUVAJ
+    </button>
+    </div>
+
+    
+    </form>
+    </section>
+  </mat-card>
+  
+  
+  
+  </section>

@@ -1,0 +1,39 @@
+<mat-tab-group>
+    <mat-tab *ngIf="this.US.getCurrentUser().typeOfUser == 'Putnik'" >
+        <ng-template matTabLabel >
+            <span matBadge={{numPoslatiZahtevi}}
+            matBadgeOverlap="true"
+            matBadgeColor="warn"
+            [matBadgeHidden]=hiddenBadgeArray[0]
+            (mousedown)="onBadge(0);">
+            Poslati zahtevi
+            </span>
+        </ng-template>
+      <app-sent-requests></app-sent-requests>
+    </mat-tab>
+  <mat-tab *ngIf="this.US.getCurrentUser().typeOfUser == 'Prevoznik'"> 
+    <ng-template matTabLabel >
+        <span matBadge={{numPrimljeniZahtevi}}
+        matBadgeOverlap="true"
+        matBadgeColor="warn"
+        [matBadgeHidden]=hiddenBadgeArray[1]
+        (mousedown)="onBadge(1);">
+          Primenljeni zahtevi
+    </span>
+    </ng-template>
+    <app-recieved-requests></app-recieved-requests>
+  </mat-tab>
+  <mat-tab>
+      <ng-template matTabLabel>
+          <span matBadge={{numOdobreniZahtevi}}
+          matBadgeOverlap="true"
+          matBadgeColor="warn"
+          [matBadgeHidden]=hiddenBadgeArray[2]
+          (mousedown)="onBadge(2);">
+            Odobreni zahtevi
+      </span>
+      </ng-template>
+    <app-approved></app-approved>
+  </mat-tab>
+  
+</mat-tab-group>

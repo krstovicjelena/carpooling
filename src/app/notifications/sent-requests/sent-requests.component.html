@@ -1,0 +1,19 @@
+<section>
+    <div fxLayout="row" fxLayoutAlign="center center" *ngIf="!nizImaElemente">
+      Nema trenutno zahteva
+    </div>
+<mat-card class="example-card" *ngFor="let item of listaZaPrikaz">
+    <mat-card-header>
+      <button mat-fab color="warn" (click)="onCancelRequest(item.id)" *ngIf="!this.NS.getSentUniqueRequest(item.id).rejected">Otkaži</button>
+      <p *ngIf="this.NS.getSentUniqueRequest(item.id).rejected" >Zahtev je odbijen</p>
+      <mat-card-title><font size="-1">{{item.infoToShow}}</font> </mat-card-title>
+      <mat-card-subtitle>
+      <div fxLayoutAlign="start center" fxLayout="row" routerLink="/profile" (click)="this.US.profileToShow=2">
+        <a href="javascript:;">{{ this.US.getNameById(item.id_prevoznik) }}</a>
+        <mat-icon>stars</mat-icon>
+        {{this.US.getRatingById(item.id_prevoznik)[0]}}
+      </div>
+      </mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
+  </section>

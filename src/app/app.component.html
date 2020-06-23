@@ -1,0 +1,78 @@
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav opened="false" >
+    <mat-nav-list>
+      <a *ngIf="!loggedIn" mat-list-item routerLink="/signup" (click)="sidenav.close()">
+        <mat-icon>person</mat-icon>
+        Otvori nalog
+      </a>
+      <a *ngIf="!loggedIn" mat-list-item routerLink="/login" (click)="sidenav.close()">
+        <mat-icon>input</mat-icon>
+       Uloguj se
+      </a>
+      <a *ngIf="loggedIn" mat-list-item routerLink="/all-rides" (click)="sidenav.close()">
+        <mat-icon>directions_car</mat-icon>
+        Vožnje
+      </a>
+      <a *ngIf="loggedIn" mat-list-item routerLink="/notifications" >
+        <mat-icon>calendar_view_day</mat-icon>
+        <a><span matBadge={{numberBadge}}
+          matBadgeOverlap="true"
+          matBadgeColor="warn"
+          [matBadgeHidden]=hiddenBadge
+          (mousedown)="setNumBadge();">
+             Obaveštenja</span>
+          </a>
+      </a>
+      
+     
+      <a *ngIf="loggedIn" mat-list-item routerLink="/profile" (click)="myProfile(); sidenav.close()">
+        <mat-icon>person</mat-icon>
+        Moj profil
+      </a>
+      <a *ngIf="loggedIn" mat-list-item routerLink="/" (click)="sidenav.close(); signOut()">
+        <mat-icon>exit_to_app</mat-icon>
+       Odjavi se
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+        <div fxHide.gt-xs>
+          <button mat-raised-button color="accent" (click)="sidenav.toggle()">
+            <mat-icon>menu</mat-icon>
+          </button>
+        </div>
+        
+        <div fxHide.gt-xs fxFlex="70%" fxLayoutAlign="center"><font size="+3" color="white"><i>{{ route }}</i></font></div>
+        <div fxHide fxShow.gt-xs fxFlex="60%" fxLayoutAlign="end"><font size="+3" color="white"><i>{{ route }}</i></font></div>
+        <div fxFlex fxLayoutAlign="end" fxLayoutGap="15px" fxHide.xs>
+
+          
+          <a *ngIf="loggedIn" routerLink="/notifications" >
+            <a><span matBadge={{numberBadge}}
+              matBadgeOverlap="true"
+              matBadgeColor="warn"
+              [matBadgeHidden]=hiddenBadge
+              (mousedown)="setNumBadge();">
+                 Obaveštenja</span>
+              </a>
+          </a>
+          <a *ngIf="loggedIn" routerLink="/rides">Vožnje</a>
+          <div *ngIf="loggedIn" [matMenuTriggerFor]="menu" >
+            <a href="javascript:;" fxLayoutAlign="center center">{{ this.US.getCurrentUser().firstName }}
+            <mat-icon>expand_more</mat-icon>
+            </a>
+          </div>
+
+
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="/profile" (click)="myProfile()">Moj profil</button>
+            <button mat-menu-item routerLink="/" (click)="signOut()">Odjavi se</button>
+          </mat-menu>
+        </div>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

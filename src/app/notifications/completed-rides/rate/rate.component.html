@@ -1,0 +1,42 @@
+<mat-dialog-content>
+<section fxFlex FxLayout="column" fxLayoutGap="10px">
+
+    <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px"
+    #f="ngForm" (ngSubmit)="onSubmit(f)">
+
+    <div *ngFor="let item of usersToRate" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" >
+        {{ this.US.getNameById(item) }}
+        <mat-form-field appearance="outline">
+            <mat-label>Ocena</mat-label>
+            <select matNativeControl  name="ocena{{item}}" ngModel>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </mat-form-field>
+    
+    
+          <mat-form-field class="example-full-width">
+              <textarea matInput placeholder="Komentar"
+              name="comment{{item}}"  #commentInput="ngModel"ngModel></textarea>
+            </mat-form-field>
+
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+        <button type="button" mat-raised-button color="warn" (click)="onClick()" >
+          Zatvori Prozor
+        </button>
+
+        <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid" >
+            Zabeleži ocenu
+          </button>
+    </div>
+
+    
+    </form>
+
+</section>
+
+</mat-dialog-content>

@@ -1,0 +1,24 @@
+/*Naša tema ima ekstenziju SCSS zbot toga što ćemo koristiti SASS jezik za definisanje teme.
+ sass je nastao kao potreba prakse za unapređenjem u smislu dodavanja elemenata*/
+
+ @import '~@angular/material/theming';
+ 
+ @include mat-core();
+ 
+ $my-theme-primary: mat-palette($mat-cyan,500);
+ /* dominantna i najčešće korišćene boje*/
+ $my-theme-accent: mat-palette($mat-cyan, 600, 700, 800);
+ /* boje za interaktivne elemente*/
+ /*svaka boja moze imati 3 nijanse:
+ A200 PODRAZUMEVANA
+ A100 SVETLIJA
+ A400 TAMNIJA*/
+ $my-theme-warn: mat-palette($mat-red);
+ /*boje za prikazivanje grešaka*/
+ $my-theme: mat-dark-theme($my-theme-primary, 
+                            $my-theme-accent, 
+                            $my-theme-warn);
+  /*funkcija podrazumeva da ce biti tamnija pozadina i svetliji elementi u prvom planu. */         
+               
+ 
+ @include angular-material-theme($my-theme);

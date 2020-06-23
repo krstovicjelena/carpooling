@@ -1,0 +1,86 @@
+<mat-dialog-content>
+    <section fxLayoutAlign="center center" fxLayout="column" fxLayoutGap="10px" id="forma">
+        <mat-card>
+           <form fxLayout="column" fxLayoutAlign="end center" fxLayoutGap="10px" #f="ngForm" (ngSubmit)="onSubmit(f)">
+             
+             <mat-form-field>
+               <input [(ngModel)]="editRideList.rideName" matInput placeholder="Naziv vožnje"   matInput ngModel name="name" required #nameInput="ngModel">
+             </mat-form-field>
+             
+             
+             <mat-form-field>
+                 <input [(ngModel)]="editRideList.startingLocation" matInput placeholder="Polazište"  matInput ngModel name="startingPoint" required #startingPointInput="ngModel">
+               </mat-form-field>
+       
+             <mat-form-field>
+               <input [(ngModel)]="editRideList.timeOfDeparture" matInput [matDatepicker]="picker" placeholder="Izaberite datum polaska"  matInput ngModel name="date" required #date="ngModel">
+               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+               <mat-datepicker #picker></mat-datepicker>
+             </mat-form-field>
+            
+             <mat-form-field appearance="outline">
+                 <mat-label>Izaberite sat polaska</mat-label>
+                 <input [(ngModel)]="editRideList.hourOfDeparture" type="number"  matInput placeholder required min="0" max="24" matInput ngModel name="sat" required #sat="ngModel">
+               </mat-form-field>
+          
+               <mat-form-field appearance="outline">
+                 <mat-label>Izaberite minut polaska</mat-label>
+                 <input [(ngModel)]="editRideList.minuteOfDeparture" type="number"  matInput placeholder required min="0" max="60" matInput ngModel name="minut" required #minut="ngModel">
+               </mat-form-field>
+            
+               <mat-form-field>
+                   <input matInput placeholder="Odredište"  matInput ngModel name="destination" required #destinationInput="ngModel">
+                 </mat-form-field>
+       
+               <mat-form-field appearance="outline">
+                   <mat-label>Izaberite sat dolaska</mat-label>
+                   <input [(ngModel)]="editRideList.hourOfArrival" type="number"  matInput placeholder required min="0" max="24"  matInput ngModel name="satd" required #satd="ngModel">
+                 </mat-form-field>
+            
+                 <mat-form-field appearance="outline">
+                   <mat-label>Izaberite minut dolaska</mat-label>
+                   <input [(ngModel)]="editRideList.minuteOfArrival" type="number"  matInput placeholder required min="0" max="59" matInput ngModel name="minutd" required #minutd="ngModel"> 
+                 </mat-form-field>
+       
+                 <mat-form-field>
+                     <input [(ngModel)]="editRideList.stajalista" matInput placeholder="Stajališta"   matInput ngModel name="stop" required #stopInput="ngModel"> 
+                   </mat-form-field>
+       
+             <mat-form-field>
+                 <mat-label>Maksimalan broj putnika</mat-label>
+               <input [(ngModel)]="editRideList.maxPassengers" type="number" matInput placeholder  matInput ngModel name="occupancy" required min="1" #occupancyInput="ngModel">
+             </mat-form-field>
+             
+       
+      
+          <div fxLayoutAlign="center center" fxLayout="column" fxLayoutGap="10px">
+            <button mat-button type="button" mat-raised-button color="warn" (click)="onRemoveRide()">Obriši vožnju</button>
+          <br>
+          <br>
+          <mat-form-field appearance="outline">
+            <mat-label>Promeni status</mat-label>
+            <mat-select [(value)]="this.thisRideStatus" >
+              <mat-option value="otkazana">otkazana</mat-option>
+              <mat-option value="čeka na zahteve">čeka na zahteve</mat-option>
+              <mat-option value="tekuća">tekuća</mat-option>
+              <mat-option value="završena">završena</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        
+ 
+      
+    
+    </form>
+    </mat-card>
+  
+    </section>
+
+
+<mat-card-actions fxLayoutAlign="center" fxLayoutGap="10px">
+    <button type="submit" mat-stroked-button color="primary"
+    (click)="onClick('cancel')">Otkaži</button>
+    <button type="submit" mat-raised-button color="primary"
+    (click)="onClick('ok')">OK</button>
+</mat-card-actions>
+</mat-dialog-content>

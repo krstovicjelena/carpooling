@@ -1,0 +1,12 @@
+<mat-dialog-content>
+    <p class="success">Da li ste sigurni da želite da zakažete?</p>
+<!-- <p>Check Your email for details on how to verify your account!</p> -->
+<mat-card-actions fxLayoutAlign="center" fxLayoutGap="10px">
+    <button type="submit" mat-stroked-button color="primary"
+    (click)="onClose()">Otkaži</button>
+    <button type="submit" mat-raised-button color="primary"
+    (click)="onClose()" routerLink="/notifications" >Pogledaj zahteve</button>
+    <button type="submit" mat-raised-button color="primary"
+    (click)="onClick()">OK</button>
+</mat-card-actions>
+</mat-dialog-content>
